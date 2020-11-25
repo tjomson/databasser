@@ -1,0 +1,14 @@
+Indlæs data (start udenfor psql):
+psql -U postgres -q DATABASENAVN < FILNAVN.sql
+
+Opret database (Start udenfor psql, cd til mappe):
+createdb -U postgres DATABASENAVN
+
+Liste af databaser (Start i psql):
+\l
+
+Gå ind i database (Start udenfor psql): 
+psql -U postgres -q DATABASENAVN
+
+Vis tabeller i database (Start inde i database):
+\dt
