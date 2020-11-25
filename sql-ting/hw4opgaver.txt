@@ -1,0 +1,8 @@
+1A:
+a, b
+
+1B:
+it is difficult to get the consistency and atomicity in a distributed system
+as data may not be the same on all nodes, in case of errors.
+
+2A:
