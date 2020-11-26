@@ -6,3 +6,74 @@ it is difficult to get the consistency and atomicity in a distributed system
 as data may not be the same on all nodes, in case of errors.
 
 2A:
+
+
+3
+3.1:
+id, pid, sid -> mid
+pid -> pn
+sid -> sn
+mid -> mn
+
+3.2:
+Ids(id, pid, sid, mid)
+Where the primary is (id, sid, pid)
+
+P(pid, pn)
+Where pid is the primary key
+
+S(sid, sn)
+Where sid is the primary key
+
+M(mid, mn)
+Where mid is the key
+
+3.3:
+drop table if exists Ids cascade;
+create table Ids (
+	id int,
+	pid int,
+	sid int,
+	mid int,
+	primary key(id, pid, sid),
+	foreign key (pid) references P(pid),
+	foreign key (sid) references S(sid),
+	foreign key (mid) references M(mid)
+);
+insert into Ids
+select id, pid, sid, mid
+from projects
+on conflict do nothing;
+
+drop table if exists P cascade;
+create table P (
+	pid int primary key,
+	pn varchar(50)
+);
+insert into P
+select pid, pn
+from projects
+on conflict do nothing;
+
+drop table if exists S cascade;
+create table S (
+	sid int primary key,
+	sn varchar(50)
+);
+insert into s
+select sid, sn
+from projects
+on conflict do nothing;
+
+drop table if exists M cascade;
+create table M (
+	mid int primary key,
+	mn varchar(50)
+);
+insert into m
+select mid, mn
+from projects
+on conflict do nothing;
+
+3.4:
+BCNF
