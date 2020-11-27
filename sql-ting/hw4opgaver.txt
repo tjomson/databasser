@@ -1,12 +1,16 @@
 1A:
-a, b
+a, b, c
 
 1B:
 it is difficult to get the consistency and atomicity in a distributed system
 as data may not be the same on all nodes, in case of errors.
 
 2A:
+b, c
 
+2B:
+Spark can take advantage of being a main-memory system, and this can work in this case,
+because we have a lot of memory, so we can hold a lot of data at a time.
 
 3
 3.1:
@@ -31,10 +35,10 @@ Where mid is the key
 3.3:
 drop table if exists Ids cascade;
 create table Ids (
-	id int,
-	pid int,
-	sid int,
-	mid int,
+	id int not null,
+	pid int not null,
+	sid int not null,
+	mid int not null,
 	primary key(id, pid, sid),
 	foreign key (pid) references P(pid),
 	foreign key (sid) references S(sid),
@@ -47,8 +51,8 @@ on conflict do nothing;
 
 drop table if exists P cascade;
 create table P (
-	pid int primary key,
-	pn varchar(50)
+	pid int primary key not null,
+	pn varchar(50) not null
 );
 insert into P
 select pid, pn
@@ -57,8 +61,8 @@ on conflict do nothing;
 
 drop table if exists S cascade;
 create table S (
-	sid int primary key,
-	sn varchar(50)
+	sid int primary key not null,
+	sn varchar(50) not null
 );
 insert into s
 select sid, sn
@@ -67,8 +71,8 @@ on conflict do nothing;
 
 drop table if exists M cascade;
 create table M (
-	mid int primary key,
-	mn varchar(50)
+	mid int primary key not null,
+	mn varchar(50) not null
 );
 insert into m
 select mid, mn
