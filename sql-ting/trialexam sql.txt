@@ -1,0 +1,63 @@
+--A
+select count(*) from gGarments g
+where g.g_price is null
+--Ans 2853
+
+--B
+select count (distinct a.d_id) from (
+select d.d_id from gDesigners d
+join gGarments g on g.d_id = d.d_id
+join gMadeOf m on m.g_id = g.g_id
+join gElements e on e.f_id = m.f_id
+where m.mo_Percentage > 25
+and e.e_element = 'Procrastinium') a
+--ans 250
+
+--C
+
+
+delete from (select * from gGarments g
+where g.co_id is null) a
+where d_id in (
+select g.d_id, count(*) from gGarments g
+where g.co_id is not null
+group by g.d_id
+)
+
+
+--D
+select a.d_id from (
+select g.d_id, avg(g.g_price) from gGarments g
+group by g.d_id
+order by avg desc
+) a
+limit 1
+--ans 1481
+
+--E
+select count(*) from (
+select e.e_element, count(*) from gElements e
+join gFabrics f on e.f_id = f.f_id
+where e.e_element like 'C%'
+group by e.e_element
+) a
+where a.count >= 5
+--Ans 2
+
+--F
+select count (*) from (
+select m.g_id, sum(m.mo_percentage) from gMadeOf m
+group by m.g_id
+) a
+where a.sum <> 100
+--Ans 4267
+
+--G
+select * from gdesigners d
+
+
+
+
+
+
+
