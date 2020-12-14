@@ -56,6 +56,34 @@ where diff > 0
 or diff is null
 --124
 
+--g
+select * from flights f
+join aircraft ai on ai.actype = f.actype
+join airport a1 on a1.airport = f.dep
+join airport a2 on a2.airport = f.arr
+join country c1 on a1.country = c1.country
+join country c2 on a2.country = c2.country
+where ai.ag = 'F'
+and c1.country <> c2.country
+and c1.region = c2.region
+--518
+
+--h
+select count (*) from (
+	select a.al, count(*) from (
+		select f.al, f.dep, count(*) from flights f
+		join airport ai on f.dep = ai.airport
+		where ai.country = 'NL'
+		group by f.al, f.dep
+	) a
+	group by a.al
+) b
+where b.count = (
+	select count(*) from airport ai
+	where ai.country = 'NL'
+)
+--1
+
 
 
 
