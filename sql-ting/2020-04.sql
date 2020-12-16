@@ -22,7 +22,17 @@ where a.count > 50000
 
 --d
 select *, de.to_date - de.from_date as time from dept_emp de
-where de.emp_no = 429386
+--where de.to_date is not null
+where not exists (
+	select * from dept_emp
+	where de.to_date is null
+)
+group by emp_no
+
+
+select * from dept_emp
+where de.to_date is null
+--??????????
 
 --f
 select count(*) from (
@@ -53,9 +63,22 @@ select count(*) from (
 --3008
 
 --h
+drop view if exists salaryEmp;
+create view salaryEmp as
+select t.emp_no, t.title, t.from_date as tFromDate, t.to_date as tToDate, de.dept_no, de.from_date as dFromDate, de.to_date as dToDate, d.name, s.salary, s.from_date as sFromDate, s.to_date as sToDate
+from titles t
+join dept_emp de on de.emp_no = t.emp_no
+join departments d on d.dept_no = de.dept_no
+join salaries s on s.emp_no = t.emp_no
+where d.name = 'Development'
+and s.to_date is null
+and t.title = 'Senior Engineer';
 
-
-
+select(emp_no) from salaryEmp se
+where se.salary = (
+	select max(salary) from salaryEmp s
+)
+--86631
 
 
 
